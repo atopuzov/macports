@@ -1,0 +1,53 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           cxx11 1.0
+PortGroup           muniversal 1.0
+
+name                arangodb
+epoch               1
+version             2.7.1
+revision            1
+license             Apache License, version 2.0
+categories          databases
+maintainers         atopuzovic
+
+description         ArangoDB is a multi-model mostly-memory database with a flexible data model for documents and graphs
+long_description    ArangoDB is a multi-model mostly-memory database with a \
+                    flexible data model for documents and graphs. It is designed \
+                    as a “general purpose database”, offering all the features you \
+                    typically need for modern web applications.
+
+platforms           darwin
+
+homepage            https://www.arangodb.com/
+master_sites        https://www.arangodb.com/repositories/Source/
+distname            ArangoDB-${version}
+
+checksums           rmd160  daf2e53b83fdd8ec64e3991f8f58ea6ecca196bb \
+                    sha256  a0f5cb20bdfa9750f43ee57a559a370a22bfc3f184a9d6d2d30d0bdadf639e12
+
+configure.cxx_stdlib libc++
+
+configure.args       --disable-relative
+
+supported_archs     i386 x86_64
+
+set dbgroup arangodb
+set dbuser arangodb
+
+set dbdir           ${prefix}/var/lib/arangodb
+set appdir          ${prefix}/var/lib/arangodb-apps
+set logdir          ${prefix}/var/log/arangodb
+
+add_users           ${dbuser} group=${dbgroup} realname=ArangoDB\ Application\ User
+
+post-destroot {
+    xinstall -m 755 -o ${dbuser} -g ${dbgroup} -d \
+        ${destroot}${dbdir} \
+        ${destroot}${logdir} \
+        ${destroot}${appdir}
+}
+
+startupitem.create      yes
+startupitem.executable  ${prefix}/sbin/arangod
