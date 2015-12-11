@@ -1,0 +1,40 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           python 1.0
+PortGroup           select 1.0
+
+name                py-autoflake
+set realname        autoflake
+version             0.6.6
+categories-append   devel
+platforms           darwin
+maintainers         atopuzovic
+supported_archs     noarch
+license             Expat
+
+homepage           http://pypi.python.org/packages/source/a/autoflake/
+master_sites       ${homepage}
+distname           ${realname}-${version}
+
+description         Removes unused imports and unused variables.
+long_description    ${description}
+
+checksums           rmd160  ca4c503c70e97c1aa4eb73567bd8f272ab9f8d9c \
+                    sha256  67f3886b74f8614b9696ea47eb9ce90fa808da142619e8e6da6eaf541df30e0f
+
+python.versions     26 27 33 34
+
+if {${name} ne ${subport}} {
+    depends_build-append port:py${python.version}-setuptools
+    depends_run-append      port:${realname}_select
+    select.group            ${realname}
+    select.file             ${filespath}/${realname}${python.version}
+    notes "
+To make the Python ${python.branch} version of autoflake the one that is run\
+when you execute the commands without a version suffix, e.g. 'autoflake', run:
+
+port select --set ${select.group} [file tail ${select.file}]
+"
+}
