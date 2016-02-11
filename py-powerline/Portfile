@@ -1,0 +1,32 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           python 1.0
+PortGroup           github 1.0
+
+github.setup        powerline powerline 2.3
+name                py-powerline
+categories-append   devel
+platforms           darwin
+maintainers         sean openmaintainer
+supported_archs     noarch
+license             MIT
+
+description         Powerline is a statusline plugin for vim, and provides \
+                    statuslines and prompts for several other applications, \
+                    including zsh, bash, tmux, IPython, Awesome and Qtile.
+long_description    ${description}
+
+checksums           rmd160  b3cb4a5083e811f99f82b34fb6297741dfae13d5 \
+                    sha256  2f430dd28fea608770821a7da99592d559ebfd90ec2c09c3798bc94830617d2b
+
+python.versions     26 27 33 34
+
+if {${name} ne ${subport}} {
+    depends_build-append port:py${python.version}-setuptools
+}
+
+# turn off livecheck because there are no releases and there is no easy way to
+# distinguish a new commit only on master
+livecheck.type      none
