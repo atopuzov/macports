@@ -1,0 +1,26 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id: Portfile 138528 2015-07-11 09:40:02Z mojca@macports.org $
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.16 5.18 5.20 5.22
+perl5.setup         LWP-Protocol-socks 1.7 ../by-authors/id/S/SC/SCR/
+revision            1
+platforms           darwin
+maintainers         nomaintainer
+license             {Artistic-1 GPL}
+supported_archs     noarch
+
+description         LWP::Protocol::socks - adds support for the socks protocol and proxy facility
+long_description    Use this package when you wish to use a socks proxy for your connections.
+
+checksums           rmd160  fb036c5601d0623a80a39ee3c7cf845a13c6d2a1 \
+                    sha256  768c7f80dc20a8e91aa7868f548193edb10dca16039519d97dff2690cbb40b4e
+
+if {${perl5.major} != ""} {
+    depends_lib-append \
+                    port:p${perl5.major}-io-socket-ssl \
+                    port:p${perl5.major}-io-socket-socks \
+                    port:p${perl5.major}-lwp-protocol-https
+}
