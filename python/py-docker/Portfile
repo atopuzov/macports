@@ -1,0 +1,31 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id: Portfile 144852 2016-01-19 23:42:20Z sean@macports.org $
+
+PortSystem          1.0
+PortGroup           python 1.0
+PortGroup           github 1.0
+
+github.setup        docker docker-py 1.7.0
+name                py-docker
+categories-append   devel
+platforms           darwin
+supported_archs     noarch
+license             Apache-2
+maintainers         sean openmaintainer
+description         An API client for docker written in Python
+long_description    $description
+
+checksums           rmd160  f86b1fa84a972b8aadea16f0b14c9cf5c5c28b2a \
+                    sha256  a8af2b4a71f79165e7d4df4f36ecbc6e6a58a43bc413a45209f3056b56ef5917
+
+python.versions     27 34
+
+if {${subport} ne ${name}} {
+    depends_build   port:py${python.version}-setuptools
+    depends_lib     port:py${python.version}-requests \
+                    port:py${python.version}-websocket-client
+
+    livecheck.type  none
+} else {
+    livecheck.regex     archive/[join ${github.tag_prefix} ""](\[^"r-\]+)${extract.suffix}
+}
