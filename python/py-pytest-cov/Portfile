@@ -1,0 +1,43 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id: Portfile 146702 2016-03-15 15:53:53Z petr@macports.org $
+
+PortSystem          1.0
+PortGroup           python 1.0
+
+set _name           pytest-cov
+set _n              [string index ${_name} 0]
+
+name                py-${_name}
+version             2.2.1
+categories-append   devel
+platforms           darwin
+supported_archs     noarch
+license             MIT
+maintainers         petr openmaintainer
+
+description         pytest-runner adds test support to setup.py scripts
+long_description    \
+    ${description}. Setup scripts can use pytest-runner to invoke py.test as distutils \
+    command and provices dependency resolution.
+
+homepage            https://pypi.python.org/pypi/${_name}/${version}
+master_sites        https://pypi.python.org/packages/source/${_n}/${_name}/
+distname            ${_name}-${version}
+
+checksums           md5     d4c65c5561343e6c6a583d5fd29e6a63 \
+                    rmd160  6e0c2d9c32164d00d41c5295e43f601fed77900c \
+                    sha256  a8b22e53e7f3b971454c35df99dffe21f4749f539491e935c55d3ff7e1b284fa
+
+python.versions     27 34 35
+
+if {${name} ne ${subport}} {
+    depends_build-append    port:py${python.version}-setuptools \
+        port:py${python.version}-setuptools_scm \
+        port:py${python.version}-coverage
+
+    livecheck.type  none
+} else {
+    livecheck.type  regex
+    livecheck.url   https://pypi.python.org/pypi/${_name}/json
+    livecheck.regex "\"${_name}-(\[.\\d\]+)\\.tar\\.gz\""
+}
