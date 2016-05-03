@@ -5,7 +5,7 @@ PortSystem          1.0
 PortGroup           python 1.0
 PortGroup           github 1.0
 
-github.setup        docker docker-py 1.7.0
+github.setup        docker docker-py 1.8.1
 name                py-docker
 categories-append   devel
 platforms           darwin
@@ -15,8 +15,8 @@ maintainers         sean openmaintainer
 description         An API client for docker written in Python
 long_description    $description
 
-checksums           rmd160  f86b1fa84a972b8aadea16f0b14c9cf5c5c28b2a \
-                    sha256  a8af2b4a71f79165e7d4df4f36ecbc6e6a58a43bc413a45209f3056b56ef5917
+checksums           rmd160  2541e6d9aada7d849a31c5bd5b0ed591def00073 \
+                    sha256  6a0bf25bc685fbc5377e86f8137e45e5409e96e8de6969b00973a56d9a6d0800
 
 python.versions     27 34
 
