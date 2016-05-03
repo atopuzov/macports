@@ -1,0 +1,38 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id: Portfile 146227 2016-03-01 23:25:09Z sean@macports.org $
+
+PortSystem          1.0
+PortGroup           python 1.0
+PortGroup           github 1.0
+
+github.setup        docker compose 1.7.0
+name                docker-compose
+categories-append   devel
+platforms           darwin
+license             Apache-2
+maintainers         sean openmaintainer
+description         Define and run multi-container applications with Docker
+long_description    Compose is a tool for defining and running multi-container \
+                    applications with Docker. With Compose, you define a multi-\
+                    container application in a single file, then spin your \
+                    application up in a single command which does everything \
+                    that needs to be done to get it running.
+
+checksums           rmd160  6d72d11333060f1d89462ddcca8fce41049e6500 \
+                    sha256  b08a891e67ee0757d06a15277a9f7fb863248e266b793b46f6e742565fec68bd
+
+python.default_version     27
+
+depends_lib         port:py${python.version}-yaml \
+                    port:py${python.version}-dockerpty \
+                    port:py${python.version}-docopt \
+                    port:py${python.version}-jsonschema \
+                    port:py${python.version}-texttable \
+                    port:py${python.version}-cached-property
+
+# remove this after next release
+post-extract {
+    reinplace "s|requests >= .*|requests >= 2.6.1, < 2.10',|" ${worksrcpath}/setup.py
+}
+
+livecheck.regex     archive/[join ${github.tag_prefix} ""](\[^"r\]+)${extract.suffix}
