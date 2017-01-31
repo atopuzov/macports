@@ -5,25 +5,24 @@ PortSystem          1.0
 PortGroup           python 1.0
 PortGroup           github 1.0
 
-github.setup        docker docker-py 2.0.2
-name                py-docker
+github.setup        shin- dockerpy-creds 0.2.1
+name                py-docker-creds
 categories-append   devel
 platforms           darwin
 supported_archs     noarch
 license             Apache-2
 maintainers         sean openmaintainer
-description         An API client for docker written in Python
+description         Python bindings for the docker credentials store API
 long_description    $description
 
-checksums           rmd160  6dd41e1dba67acb2c54bf2924fbaf81d987a48f9 \
-                    sha256  a06fc33f64e2405bc60d3aebaf37dc723c57c893045029d8d2980cc7363a645c
+checksums           rmd160  b5d71f144841751326b533474308a635191c7956 \
+                    sha256  2a24525d79ef0c4decea6161e5b15ff7228f080508456df1f9429b1cdadbaab6
 
 python.versions     27 34
 
 if {${subport} ne ${name}} {
-    depends_build   port:py${python.version}-setuptools
-    depends_lib     port:py${python.version}-requests \
-                    port:py${python.version}-websocket-client
+    depends_build   port:py${python.version}-six
+    depends_lib     port:py${python.version}-six
 
     livecheck.type  none
 } else {

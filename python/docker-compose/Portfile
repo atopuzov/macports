@@ -5,7 +5,7 @@ PortSystem          1.0
 PortGroup           python 1.0
 PortGroup           github 1.0
 
-github.setup        docker compose 1.7.0
+github.setup        docker compose 1.10.0
 name                docker-compose
 categories-append   devel
 platforms           darwin
@@ -18,8 +18,8 @@ long_description    Compose is a tool for defining and running multi-container \
                     application up in a single command which does everything \
                     that needs to be done to get it running.
 
-checksums           rmd160  6d72d11333060f1d89462ddcca8fce41049e6500 \
-                    sha256  b08a891e67ee0757d06a15277a9f7fb863248e266b793b46f6e742565fec68bd
+checksums           rmd160  51ab8a46c73e8dda690790106969f089e0eafc07 \
+                    sha256  9913f228c7e9f8ed0ef749d5c69ef898d436ba80a9886b898d69651b5365aeb7
 
 python.default_version     27
 
@@ -28,11 +28,12 @@ depends_lib         port:py${python.version}-yaml \
                     port:py${python.version}-docopt \
                     port:py${python.version}-jsonschema \
                     port:py${python.version}-texttable \
-                    port:py${python.version}-cached-property
+                    port:py${python.version}-cached-property \
+                    port:py${python.version}-docker-creds
 
 # remove this after next release
 post-extract {
-    reinplace "s|requests >= .*|requests >= 2.6.1, < 2.10',|" ${worksrcpath}/setup.py
+    reinplace "s|requests >= .*|requests >= 2.6.1',|" ${worksrcpath}/setup.py
 }
 
 livecheck.regex     archive/[join ${github.tag_prefix} ""](\[^"r\]+)${extract.suffix}
